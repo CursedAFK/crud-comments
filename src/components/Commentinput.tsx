@@ -1,13 +1,18 @@
 import { useCommentContext } from '../contexts/commentContext'
+import juliusomo from '../images/avatars/image-juliusomo.png'
 
-const Commentinput = () => {
+type commentInputProps = {
+  replyType?: string
+}
+
+const Commentinput = ({ replyType = 'SEND' }: commentInputProps) => {
   const { currUser } = useCommentContext()
 
   return (
     <form>
-      <img src={currUser.image.png} alt={currUser.username} />
+      <img src={juliusomo} alt={currUser.username} />
       <textarea placeholder='Add a comment...' />
-      <button type='submit'>SEND</button>
+      <button type='submit'>{replyType}</button>
     </form>
   )
 }

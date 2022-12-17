@@ -1,9 +1,10 @@
+import React from 'react'
 import CommentCard from './components/CommentCard'
 import Commentinput from './components/Commentinput'
 import { useCommentContext } from './contexts/commentContext'
 
 const App = () => {
-  const { comments } = useCommentContext()
+  const { comments, currUser } = useCommentContext()
 
   return (
     <main>
@@ -17,17 +18,29 @@ const App = () => {
               score={comment.score}
               user={comment.user}
             />
+            {comment.user.username !== currUser.username && (
+              <div className='commentReplyDiv mainReplyDiv'>
+                <Commentinput replyType='REPLY' />
+              </div>
+            )}
             {comment.replies.length > 0 && (
               <div className='nestedCommentCard'>
                 {comment.replies.map((reply) => (
-                  <CommentCard
-                    key={reply.id}
-                    content={reply.content}
-                    createdAt={reply.createdAt}
-                    id={reply.id}
-                    score={reply.score}
-                    user={reply.user}
-                  />
+                  <React.Fragment key={reply.id}>
+                    <CommentCard
+                      content={reply.content}
+                      createdAt={reply.createdAt}
+                      id={reply.id}
+                      score={reply.score}
+                      user={reply.user}
+                      replyingTo={reply.replyingTo}
+                    />
+                    {reply.user.username !== currUser.username && (
+                      <div className='commentReplyDiv'>
+                        <Commentinput replyType='REPLY' />
+                      </div>
+                    )}
+                  </React.Fragment>
                 ))}
               </div>
             )}

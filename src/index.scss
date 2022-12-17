@@ -43,6 +43,178 @@ main {
   width: 100vw;
   height: 100vh;
 
+  .mainComments {
+    height: 70%;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 4%;
+
+    .commentCard {
+      background-color: var(--very-light-gray);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 5%;
+      position: relative;
+      padding-bottom: 15%;
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        gap: 2vh;
+
+        .header {
+          display: flex;
+          gap: 4%;
+          align-items: center;
+          color: var(--dark-blue);
+
+          img {
+            width: 13%;
+          }
+
+          .name {
+            font-weight: var(--fw-bold);
+          }
+
+          .currUser {
+            background-color: var(--moderate-blue);
+            color: var(--white);
+            padding: 0.5% 2%;
+          }
+        }
+
+        .content {
+          line-height: 140%;
+          color: var(--dark-blue);
+
+          span {
+            font-weight: var(--fw-semi-bold);
+            color: var(--moderate-blue);
+          }
+        }
+      }
+
+      .btnActions {
+        position: absolute;
+        right: 7%;
+        bottom: 7%;
+        display: flex;
+        align-items: center;
+        gap: 5vw;
+
+        .btn {
+          display: flex;
+          align-items: center;
+          gap: 12%;
+          cursor: pointer;
+        }
+      }
+
+      .votes {
+        position: absolute;
+        left: 5%;
+        bottom: 5%;
+        display: flex;
+        align-items: center;
+        background-color: var(--light-gray);
+        padding: 2% 4%;
+        border-radius: var(--radius);
+        gap: 4vw;
+
+        img {
+          cursor: pointer;
+        }
+
+        .negative {
+          font-weight: var(--fw-bold);
+          color: var(--soft-red);
+        }
+
+        .positive {
+          font-weight: var(--fw-bold);
+          color: var(--moderate-blue);
+        }
+      }
+    }
+
+    .nestedCommentCard {
+      display: flex;
+      flex-direction: column;
+      gap: 2.4vh;
+      padding-top: 4%;
+      padding-left: 6%;
+      position: relative;
+
+      &::before {
+        position: absolute;
+        content: '';
+        width: 1%;
+        background-color: rgba(0, 0, 0, 0.05);
+        top: 3%;
+        bottom: 0;
+        left: 0;
+      }
+    }
+
+    .commentReplyDiv {
+      &.mainReplyDiv {
+        padding-top: 4%;
+      }
+
+      form {
+        background-color: var(--very-light-gray);
+        padding: 1rem;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        display: grid;
+        grid-template-areas: 'i i i' 'p . b';
+        gap: 0.8rem;
+
+        textarea {
+          grid-area: i;
+          resize: none;
+          outline: none;
+          padding: 0.5rem 1rem;
+          border-radius: var(--radius);
+          border: 1px solid rgba(0, 0, 0, 0.2);
+          height: 5rem;
+          background-color: var(--very-light-gray);
+
+          &:focus {
+            border-color: var(--moderate-blue);
+          }
+        }
+
+        img {
+          grid-area: p;
+          width: 30%;
+          align-self: center;
+        }
+
+        button {
+          grid-area: b;
+          padding: 0.8rem 0.2rem;
+          border: none;
+          outline: none;
+          color: var(--very-light-gray);
+          background-color: var(--moderate-blue);
+          font-weight: var(--fw-semi-bold);
+          border-radius: var(--radius);
+          cursor: pointer;
+
+          &:hover {
+            opacity: var(--hover);
+          }
+        }
+      }
+    }
+  }
+
+  .mainComments::-webkit-scrollbar {
+    display: none;
+  }
+
   .mainInput {
     position: absolute;
     bottom: 3%;
@@ -66,6 +238,7 @@ main {
         border-radius: var(--radius);
         border: 1px solid rgba(0, 0, 0, 0.2);
         height: 5rem;
+        background-color: var(--very-light-gray);
 
         &:focus {
           border-color: var(--moderate-blue);
@@ -99,12 +272,98 @@ main {
 
 @media screen and (min-width: 750px) {
   main {
-    padding: 2rem 18%;
+    padding: 2rem 25%;
+
+    .mainComments {
+      height: 78%;
+      gap: 3%;
+
+      .commentCard {
+        position: relative;
+        padding-bottom: 0;
+        padding: 3%;
+        padding-left: 10%;
+
+        .container {
+          gap: 1.5vh;
+
+          .header {
+            gap: 2.5%;
+
+            img {
+              width: 4%;
+            }
+
+            .currUser {
+              padding: 0.1% 0.8%;
+            }
+          }
+        }
+
+        .btnActions {
+          right: 6%;
+          bottom: 72%;
+          gap: 2vw;
+        }
+
+        .votes {
+          left: 2.5%;
+          bottom: 30%;
+          flex-direction: column;
+          padding: 1.5%;
+          gap: 1.5vh;
+        }
+      }
+
+      .nestedCommentCard {
+        padding-top: 3%;
+        padding-left: 10%;
+
+        &::before {
+          width: 0.5%;
+          top: 8%;
+          left: 4.5%;
+        }
+      }
+
+      .commentReplyDiv {
+        &.mainReplyDiv {
+          padding-top: 2.5%;
+        }
+
+        form {
+          padding: 1.5rem 2rem;
+          column-gap: 1.2rem;
+          row-gap: 0;
+          grid-template-columns: 1fr 8fr 1fr;
+
+          textarea {
+            grid-area: unset;
+            padding: 0.7rem 1.4rem;
+            height: 6rem;
+            margin-left: -5%;
+          }
+
+          img {
+            grid-area: unset;
+            width: 60%;
+            align-self: flex-start;
+          }
+
+          button {
+            grid-area: unset;
+            padding: 0.8rem 1.8rem;
+            font-size: 110%;
+            align-self: flex-start;
+          }
+        }
+      }
+    }
 
     .mainInput {
       bottom: 5%;
-      left: 18%;
-      right: 18%;
+      left: 25%;
+      right: 25%;
 
       form {
         padding: 1.5rem 2rem;
@@ -115,7 +374,7 @@ main {
         textarea {
           grid-area: unset;
           padding: 0.7rem 1.4rem;
-          height: 7rem;
+          height: 6rem;
           margin-left: -5%;
         }
 
@@ -127,8 +386,8 @@ main {
 
         button {
           grid-area: unset;
-          padding: 1rem 2rem;
-          font-size: 120%;
+          padding: 0.8rem 1.8rem;
+          font-size: 110%;
           align-self: flex-start;
         }
       }
