@@ -315,9 +315,14 @@ main {
     }
   }
 
-  // .mainComments::-webkit-scrollbar {
-  //   display: none;
-  // }
+  .mainComments::-webkit-scrollbar {
+    width: 0.4rem;
+  }
+
+  .mainComments::-webkit-scrollbar-thumb {
+    background-color: var(--grayish-blue);
+    border-radius: var(--radius);
+  }
 
   .mainInput {
     position: absolute;
@@ -374,7 +379,15 @@ main {
   }
 }
 
-@media screen and (min-width: 750px) {
+@media screen and (min-width: 390px) {
+  main {
+    .mainComments {
+      height: 76%;
+    }
+  }
+}
+
+@media screen and (min-width: 1000px) {
   main {
     padding: 2rem 25%;
 
@@ -390,8 +403,12 @@ main {
       }
     }
 
+    .mainComments::-webkit-scrollbar {
+      width: 0.3rem;
+    }
+
     .mainComments {
-      height: 78%;
+      height: 73%;
       gap: 3%;
 
       .commentCard {
@@ -522,6 +539,22 @@ main {
           align-self: flex-start;
         }
       }
+    }
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  main {
+    .mainComments {
+      height: 79%;
+    }
+  }
+}
+
+@media (hover: none) {
+  main {
+    .mainComments::-webkit-scrollbar {
+      width: 0.3rem;
     }
   }
 }
