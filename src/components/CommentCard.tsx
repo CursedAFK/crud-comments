@@ -8,9 +8,11 @@ import editIcon from '../images/icon-edit.svg'
 import replyIcon from '../images/icon-reply.svg'
 import plusIcon from '../images/icon-plus.svg'
 import minusIcon from '../images/icon-minus.svg'
+import { formatDistanceToNow, parseISO } from 'date-fns'
+import { FormEvent, useState } from 'react'
 
 type commentCardProps = {
-  id: number
+  id: string
   content: string
   createdAt: string
   score: number
@@ -27,7 +29,18 @@ type userPicProps = {
 }
 
 const CommentCard = (comment: commentCardProps) => {
-  const { currUser } = useCommentContext()
+  const [editContent, setEditContent] = useState<string>(comment.content)
+
+  const {
+    currUser,
+    setReplyStatus,
+    voteChange,
+    setIsModalOpen,
+    setModalId,
+    isEdit,
+    setIsEditStatus,
+    editComment
+  } = useCommentContext()
 
   const USER_PICS: userPicProps = {
     amyrobson,
@@ -45,6 +58,17 @@ const CommentCard = (comment: commentCardProps) => {
 
   const votePH = comment.score < 0
 
+  const getTimePeriod = (time: string) => {
+    const data = parseISO(time)
+    const timePeriod = formatDistanceToNow(data)
+    return timePeriod
+  }
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault()
+    editComment(comment.id, editContent)
+  }
+
   return (
     <section className='commentCard'>
       <div className='container'>
@@ -55,33 +79,60 @@ const CommentCard = (comment: commentCardProps) => {
           />
           <h2 className='name'>{comment.user.username}</h2>
           {getCurrUser && <p className='currUser'>you</p>}
-          <p className='time'>{comment.createdAt}</p>
+          <p className='time'>{getTimePeriod(comment.createdAt)} ago</p>
         </div>
-        <p className='content'>
-          {comment.replyingTo && <span>@{comment.replyingTo}</span>}{' '}
-          {comment.content}
-        </p>
+        {isEdit[comment.id] === true ? (
+          <form onSubmit={handleSubmit} className='contentEdit'>
+            <textarea
+              value={editContent}
+              onChange={(e) => setEditContent(e.target.value)}
+            />
+            <button type='submit'>UPDATE</button>
+          </form>
+        ) : (
+          <p className='content'>
+            {comment.replyingTo && <span>@{comment.replyingTo}</span>}{' '}
+            {comment.content}
+          </p>
+        )}
       </div>
       <div className='btnActions'>
         {getCurrUser ? (
           <>
-            <div className='btn Delete'>
+            <div
+              className='btn Delete'
+              onClick={() => {
+                setModalId(comment.id)
+                setIsModalOpen(true)
+              }}
+            >
               <img src={deleteIcon} alt='deleteIcon' /> Delete
             </div>
-            <div className='btn Edit'>
+            <div
+              className='btn Edit'
+              onClick={() => setIsEditStatus(comment.id)}
+            >
               <img src={editIcon} alt='editIcon' /> Edit
             </div>
           </>
         ) : (
-          <div className='btn reply'>
+          <div className='btn reply' onClick={() => setReplyStatus(comment.id)}>
             <img src={replyIcon} alt='replyIcon' /> Reply
           </div>
         )}
       </div>
       <div className='votes'>
-        <img src={plusIcon} alt='plusIcon' />
+        <img
+          src={plusIcon}
+          alt='plusIcon'
+          onClick={() => voteChange(comment.id, 'add')}
+        />
         <p className={votePH ? 'negative' : 'positive'}>{comment.score}</p>
-        <img src={minusIcon} alt='minusIcon' />
+        <img
+          src={minusIcon}
+          alt='minusIcon'
+          onClick={() => voteChange(comment.id, 'sub')}
+        />
       </div>
     </section>
   )

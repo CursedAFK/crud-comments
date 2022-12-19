@@ -43,6 +43,66 @@ main {
   width: 100vw;
   height: 100vh;
 
+  .fixedModal {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 5%;
+
+    .container {
+      background-color: var(--light-gray);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 2.5vh;
+      padding: 8%;
+      color: var(--dark-blue);
+
+      h2 {
+        font-weight: var(--fw-semi-bold);
+        font-size: 120%;
+      }
+
+      .btnDiv {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        button {
+          padding: 4% 6%;
+          border: none;
+          outline: none;
+          box-shadow: var(--shadow);
+          border-radius: var(--radius);
+          font-weight: var(--fw-semi-bold);
+          color: var(--light-gray);
+          cursor: pointer;
+
+          &:first-child {
+            background-color: var(--grayish-blue);
+          }
+
+          &:last-child {
+            background-color: var(--soft-red);
+          }
+
+          &:hover,
+          &:focus {
+            opacity: 0.5;
+          }
+        }
+      }
+    }
+  }
+
   .mainComments {
     height: 70%;
     overflow-y: scroll;
@@ -77,10 +137,54 @@ main {
             font-weight: var(--fw-bold);
           }
 
+          .time {
+            font-size: 90%;
+          }
+
           .currUser {
             background-color: var(--moderate-blue);
             color: var(--white);
             padding: 0.5% 2%;
+          }
+        }
+
+        .contentEdit {
+          background-color: var(--very-light-gray);
+          border-radius: var(--radius);
+          box-shadow: var(--shadow);
+          display: flex;
+          flex-direction: column;
+          gap: 0.8rem;
+
+          textarea {
+            resize: none;
+            outline: none;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            height: 5rem;
+            background-color: var(--very-light-gray);
+
+            &:focus {
+              border-color: var(--moderate-blue);
+            }
+          }
+
+          button {
+            align-self: flex-end;
+            padding: 3.5% 6%;
+            border: none;
+            outline: none;
+            color: var(--very-light-gray);
+            background-color: var(--moderate-blue);
+            font-weight: var(--fw-semi-bold);
+            border-radius: var(--radius);
+            cursor: pointer;
+
+            &:hover,
+            &:focus {
+              opacity: var(--hover);
+            }
           }
         }
 
@@ -211,9 +315,9 @@ main {
     }
   }
 
-  .mainComments::-webkit-scrollbar {
-    display: none;
-  }
+  // .mainComments::-webkit-scrollbar {
+  //   display: none;
+  // }
 
   .mainInput {
     position: absolute;
@@ -274,6 +378,18 @@ main {
   main {
     padding: 2rem 25%;
 
+    .fixedModal {
+      padding: 0 35%;
+
+      .container {
+        .btnDiv {
+          button {
+            padding: 3% 6%;
+          }
+        }
+      }
+    }
+
     .mainComments {
       height: 78%;
       gap: 3%;
@@ -298,17 +414,32 @@ main {
               padding: 0.1% 0.8%;
             }
           }
+
+          .contentEdit {
+            gap: 1rem;
+
+            textarea {
+              padding: 0.7rem 1.4rem;
+            }
+
+            button {
+              align-self: flex-end;
+              padding: 2.5% 4.5%;
+            }
+          }
         }
 
         .btnActions {
           right: 6%;
-          bottom: 72%;
+          bottom: unset;
+          top: 1.4rem;
           gap: 2vw;
         }
 
         .votes {
           left: 2.5%;
-          bottom: 30%;
+          bottom: unset;
+          top: 10%;
           flex-direction: column;
           padding: 1.5%;
           gap: 1.5vh;
